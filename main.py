@@ -26,7 +26,7 @@ class ChatRequest(BaseModel):
     session_id: str
 
 llm = ChatCohere(
-    cohere_api_key="ORpQXJdhHU93VMRqEAiwtXQqIXuxqTaZdcBEUxL8",
+    cohere_api_key=os.getenv("TOGETHER_API_KEY"),
     model="command-a-03-2025"
 )
 
@@ -99,3 +99,4 @@ if __name__ == "__main__":
 
     # Run Streamlit in main thread
     run_streamlit()
+
