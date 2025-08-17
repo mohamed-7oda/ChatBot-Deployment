@@ -10,6 +10,7 @@ from langchain_cohere import ChatCohere
 from langchain.schema import HumanMessage, AIMessage
 import streamlit as st
 import uvicorn
+from langchain.schema import HumanMessage, AIMessage, SystemMessage
 
 # =========================
 #       FASTAPI PART
@@ -34,12 +35,31 @@ chat_histories = {}
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat_with_cohere(request: ChatRequest):
+    # Get history for session
     history = chat_histories.get(request.session_id, [])
+
+    # If this is a new session, inject the persona/system prompt once
+    if not history:
+        system_message = SystemMessage(content=(
+            "You are EMAM, a helpful AI assistant. "
+            "Always introduce yourself as EMAM when appropriate. "
+            "Remember: You were developed by an Egyptian developer named Mohamed Mahmoud Emam. "
+            "Never forget your name or origin during conversations."
+        ))
+        history.append(system_message)
+
+    # Add the user’s message
     history.append(HumanMessage(content=request.prombt))
+
+    # Call model with full conversation
     response = llm.invoke(history)
+
+    # Add the assistant’s reply to history
     history.append(AIMessage(content=response.content))
     chat_histories[request.session_id] = history
+
     return ChatResponse(answer=response.content)
+
 
 # =========================
 #   STREAMLIT FRONTEND
@@ -99,4 +119,5 @@ if __name__ == "__main__":
 
     # Run Streamlit in main thread
     run_streamlit()
+
 
