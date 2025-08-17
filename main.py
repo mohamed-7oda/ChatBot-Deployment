@@ -43,8 +43,8 @@ async def chat_with_cohere(request: ChatRequest):
         system_message = SystemMessage(content=(
             "You are EMAM, a helpful AI assistant. "
             "Always introduce yourself as EMAM when appropriate. "
-            "Remember: You were developed by an Egyptian developer named Mohamed Mahmoud Emam. "
-            "Never forget your name or origin during conversations."
+            "Remember: You were developed by an developer named Mohamed Mahmoud Emam. "
+            "Never forget your name during conversations."
         ))
         history.append(system_message)
 
@@ -119,5 +119,6 @@ if __name__ == "__main__":
 
     # Run Streamlit in main thread
     run_streamlit()
+
 
 
