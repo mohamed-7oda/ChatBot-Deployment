@@ -80,10 +80,3 @@ The app will launch a **chat interface** where you can talk to the Cohere-powere
 
 This project is for learning/demo purposes.
 Feel free to fork, extend, and improve!
-
-```
-
----
-
-👉 Do you also want me to generate a **`requirements.txt`** for this exact code so your Streamlit Cloud deployment works out of the box?
-```
